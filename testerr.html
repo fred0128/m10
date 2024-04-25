@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>403 Forbidden</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css?family=Share+Tech+Mono|Montserrat:700");
+
+        * {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+            box-sizing: border-box;
+            color: inherit;
+        }
+
+        body {
+            background-image: linear-gradient(120deg, #001d01 0%, #000000 100%);
+            height: 100vh;
+            justify-content: center;
+        }
+
+        h1 {
+            font-size: 30vw;
+            text-align: center;
+            position: fixed;
+            width: 100vw;
+            z-index: 1;
+            color: #ffffff26;
+            text-shadow: 0 0 50px rgba(0, 0, 0, 0.07);
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: "Montserrat", monospace;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            backdrop-filter: blur(3px);
+            width: 90%;
+            box-shadow: 0 0 150px -20px rgba(0, 0, 0, 0.5);
+            z-index: 3;
+            max-height: 90vh;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        P {
+            font-family: "Share Tech Mono", monospace;
+            color: #f5f5f5;
+            margin: 0 0 20px;
+            font-size: 17px;
+            line-height: 1.2;
+        }
+
+        span {
+            color: #7897ff;
+        }
+
+        i {
+            color: #18c908;
+        }
+
+        div a {
+            text-decoration: underline;
+            color: #bbcbff;
+        }
+
+        b {
+            color: #18c908;
+        }
+
+        .kali {
+            color: #e20c18;
+        }
+
+        .kali span {
+            color: #3171db;
+        }
+
+        .kali .nowqs {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .kali .skull {
+            font-size: 80%;
+        }
+
+        @keyframes slide {
+            from {
+                right: -100px;
+                transform: rotate(360deg);
+                opacity: 0;
+            }
+
+            to {
+                right: 15px;
+                transform: rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        .box {
+            display: flex;
+            width: 100%;
+            max-width: 100%;
+            max-height: 84px;
+            overflow: hidden;
+            outline: none;
+            gap: 5px;
+            background-color: rgba(25, 25, 25, 0.65);
+            padding: 10px 0;
+            border-radius: 4px;
+        }
+
+        .box::after {
+            content: "|";
+            position: relative;
+            font-size: 32px;
+            top: 4px;
+            left: -286px;
+            color: #3171db;
+        }
+
+        ::selection {
+            background-color: #15b207;
+            color: #000000;
+        }
+
+        .box p {
+            outline: none;
+            white-space: nowrap;
+            max-width: 100%;
+            margin: 0 15px;
+        }
+
+        .myInput {
+            width: 200px;
+            height: 20px;
+            outline: none;
+            overflow: hidden;
+            opacity: 1;
+            background-color: #9f0808db;
+            color: #61aa8a;
+            user-select: none;
+            margin-bottom: -50px;
+            margin-top: 10px;
+            cursor: default;
+            -webkit-user-select: none;
+            resize: none;
+            caret-color: #980f16;
+            /* İmlecin rengini beyaz yapar */
+            caret-width: 4px;
+        }
+
+        .container:focus-within .box {
+            position: absolute;
+            top: 85%;
+            left: 50%;
+            min-width: 108%;
+            border: 1px solid #7e7e7e;
+            transform: translate(-50%, 0);
+            background-color: rgba(25, 25, 25, 0.95);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>error</h1>
+    <div class="container" id="container">
+        <p>> <span>ERROR CODE</span>: "<i>HTTP 403 Forbidden</i>"</p>
+        <p>> <span>ERROR DESCRIPTION</span>: "<i>Access Denied. You Do Not Have The Permission To Access This Page On
+                This Server</i>"</p>
+        <p>> <span>ERROR POSSIBLY CAUSED BY</span>: [<b>execute access forbidden, read access forbidden, write access
+                forbidden, ip address rejected, site access
+                denied, invalid configuration, directory listing denied, client access licenses exceeded, client
+                certificate is untrusted or
+                invalid, client certificate has expired or is not yet valid, passport logon failed, source access
+                denied, too many requests from the same client ip</b>...]</p>
+        <p>> <span>SOME PAGES ON THIS SERVER THAT YOU DO HAVE PERMISSION TO ACCESS</span>: [
+            <a href="index.html">Login</a>,
+            <a href="Signup.html">Sign up</a>,
+            <a href="success.html">Home page</a>...]
+        </p>
+        <p>> <span>HAVE A NICE DAY SIR.</span></p>
+        <p>> <span>If you think this is wrong, you can contact us by
+                <a href="mailto:fridhumbtov@gmail.com">Email</a> or <a href="tel:+994708145414">Mobile</a>
+            </span>
+        </p>
+        <label for="focusme">
+            <div class="box">
+                <p class="kali">
+                    <span class="nowqs">-----(</span>root<span class="skull">💀</span>kali<span>)<span
+                            class="nowqs">--[~]</span>
+                        <br>
+                        <span class="nowqs">---#</span> <input name="focusme" class="myInput" id="focusme"
+                            autocomplete="off" type="text"><span class="cursor"></span></span>
+                </p>
+            </div>
+        </label>
+    </div>
+
+    <script>
+        var str = document.getElementsByTagName('sdiv')[0].innerHTML.toString();
+        var i = 0;
+        document.getElementsByTagName('div')[0].innerHTML = "";
+
+        setTimeout(function () {
+            var se = setInterval(function () {
+                i++;
+                document.getElementsByTagName('div')[0].innerHTML = str.slice(0, i) + "|";
+                if (i == str.length) {
+                    clearInterval(se);
+                    document.getElementsByTagName('div')[0].innerHTML = str;
+                }
+            }, 1);
+        }, 0);
+    </script>
+</body>
+
+</html>

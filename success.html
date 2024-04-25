@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="success.css">
+    <title>Document</title>
+    <script>
+
+        const keyy = localStorage.getItem('keyy');
+
+        if(keyy == "itsjustkey"){
+            console.log(keyy);
+        }else{
+            window.location.replace("error.html");
+            console.log("writed!");
+        }
+
+    </script>
+</head>
+
+<body>
+    <div class="frameContainer">
+
+        <div class="coolinput">
+            <label for="searchbar" class="text">Erazi axtar:</label>
+            <input id="searchbar" onkeyup="search(event)" type="text" name="search" placeholder="Erazi axtar.."
+                class="searchbar">
+        </div>
+
+        <ul id='list'>
+
+        </ul>
+
+        <div id="selectedItems"></div>
+    </div>
+
+    <script src="search.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA2MUj84kyc6xjPn_FS8IVWCR9GA8P92Qw",
+            authDomain: "farid-ed21a.firebaseapp.com",
+            projectId: "farid-ed21a",
+            storageBucket: "farid-ed21a.appspot.com",
+            messagingSenderId: "584998691895",
+            appId: "1:584998691895:web:8e687d4d8fffb603498bb2"
+        };
+
+        const app = initializeApp(firebaseConfig);
+
+        const db = getFirestore(app);
+
+
+        const querySnapshot = await getDocs(collection(db, "erazi"));
+        querySnapshot.forEach((doc) => {
+            var li = document.createElement("li");
+            li.classList.add("erazi");
+            var button = document.createElement("button");
+            button.textContent = `${doc.id}`;
+            button.onclick = function () {
+                selectItem(this);
+            };
+            li.appendChild(button);
+            document.getElementById("list").appendChild(li);
+        });
+
+        
+
+    </script>
+
+</body>
+
+</html>

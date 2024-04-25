@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Sign up</title>
+</head>
+
+<body>
+
+    <form>
+        <h2 class="head-text">Hesab yaradın</h2>
+        <div class="form-input">
+            <label for="ad" class="text">Ad:</label>
+            <input type="text" placeholder="Adınızı daxil edin..." name="ad" class="form-item ad" id="name" required>
+        </div>
+
+        <div class="form-input">
+            <label for="soyad" class="text">Soyad:</label>
+            <input type="text" placeholder="Soyadınızı daxil edin..." name="soyad" class="form-item soyad" id="surname"
+                required>
+        </div>
+
+        <div class="form-input">
+            <label for="nomre" class="text">Nömrə:</label>
+            <input type="number" placeholder="Nümunə: 994552151515" name="nomre" min="994100000000" max="994999999999"
+                inputmode="numeric" class="form-item nomre" id="phone" required>
+        </div>
+
+        <div class="form-input form-input-pass">
+            <div class="primary">
+                <label for="sifre" class="text">Şifrə:</label>
+                <input type="password" placeholder="Şifrə təyin edin..." name="sifre"
+                    class="form-item sifre form-item-sifre" id="sifre1" required>
+            </div>
+            <div class="form-check-box">
+                <input class="check-form" id="sifre-label" type="checkbox" onclick="showPassword1()">
+                <label class="sifre-label" for="sifre-label">Show</label>
+            </div>
+        </div>
+
+        <div class="form-input form-input-pass">
+            <div class="primary">
+                <label for="sifre" class="text">Təkrar şifrə:</label>
+                <input type="password" placeholder="Şifrəni təkrar daxil edin..." name="sifre2"
+                    class="form-item sifre form-item-sifre" id="sifre2" required>
+            </div>
+            <div class="form-check-box">
+                <input class="check-form2" id="sifre-label2" type="checkbox" onclick="showPassword2()">
+                <label class="sifre-label2" for="sifre-label2">Show</label>
+            </div>
+        </div>
+
+        <div class="errMsg" id="userAlreadyExists">
+            <p class="err-nid"><b>!</b></p>
+            <p>Bu telefon nömrəsi artıq qeydiyyatdan keçib. Hesabınıza daxil olmağı sınaya bilərsiz. <a class="myLink"
+                    href="index.html">Daxil ol.</a></p>
+        </div>
+
+        <div class="errMsg" id="nameAlreadyExists">
+            <p class="err-nid"><b>!</b></p>
+            <p>Ad və soyad artıq qeydiyyatdan keçib.</p>
+        </div>
+
+
+
+        <br><br>
+        <input type="submit" value="Hesab yarat">
+        <p class="tologin">Hesabınız var? <a href="index.html">Daxil ol</a></p>
+    </form>
+
+    <script src="script.js"></script>
+
+
+
+
+
+    <!-- Include Firebase SDK -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyA2MUj84kyc6xjPn_FS8IVWCR9GA8P92Qw",
+            authDomain: "farid-ed21a.firebaseapp.com",
+            projectId: "farid-ed21a",
+            storageBucket: "farid-ed21a.appspot.com",
+            messagingSenderId: "584998691895",
+            appId: "1:584998691895:web:8e687d4d8fffb603498bb2"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        // Get a reference to the Firestore service
+        const db = getFirestore(app);
+
+
+
+        // Function to add data to Firestore
+        async function addData() {
+            const names = document.getElementById('name').value;
+            const surnames = document.getElementById('surname').value;
+            const phones = document.getElementById('phone').value;
+            const passw1 = document.getElementById('sifre1').value;
+            const passw2 = document.getElementById('sifre2').value;
+
+            try {
+                // Check if a user with the same phone number exists
+                const phoneQuery = query(collection(db, 'users'), where('phone', '==', phones));
+                const phoneSnapshot = await getDocs(phoneQuery);
+                if (!phoneSnapshot.empty) {
+                    console.error('Bu telefon numarasına sahip bir kullanıcı zaten var');
+
+                    userAlreadyExists.style.display = 'flex';
+                    return;
+                }
+
+                // Check if a user with the same name and surname exists
+                const nameQuery = query(collection(db, 'users'), where('name', '==', names), where('surname', '==', surnames));
+                const nameSnapshot = await getDocs(nameQuery);
+                if (!nameSnapshot.empty) {
+                    console.error('Bu isim ve soyisme sahip bir kullanıcı zaten var');
+                    nameAlreadyExists.style.display = 'flex';
+                    return;
+                }
+
+                // Check if passwords match
+                if (passw1 !== passw2) {
+                    console.error('Şifreler uyuşmuyor');
+                    return;
+                }
+
+                // If all checks pass, add the user data to Firestore
+                const data = {
+                    name: names,
+                    surname: surnames,
+                    phone: phones,
+                    password: passw1
+                };
+                const docRef = await addDoc(collection(db, "users"), data);
+                console.log("Belge ID'si ile yazılan belge: ", docRef.id);
+            } catch (error) {
+                console.error("Belge ekleme hatası: ", error);
+            }
+        }
+
+        function createUser() {
+            addData();
+        }
+        // Function to read data from Firestore
+        async function readData() {
+            try {
+                const querySnapshot = await getDocs(collection(db, "users"));
+                querySnapshot.forEach((doc) => {
+                    console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
+                });
+            } catch (error) {
+                console.error("Error getting documents: ", error);
+            }
+        }
+
+
+        document.querySelector('form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            createUser();
+        });
+
+
+        readData();
+
+        async function checkPasswords() {
+            const passw1 = document.getElementById('sifre1').value;
+            const passw2 = document.getElementById('sifre2').value;
+
+            // Check if passwords match
+            if (passw1 !== passw2) {
+                // Show error message
+                const errorMessage = document.createElement('p');
+                errorMessage.textContent = 'Şifreler uyuşmuyor';
+                errorMessage.classList.add('error-message');
+                document.body.appendChild(errorMessage);
+
+                // Remove error message after 4 seconds
+                setTimeout(() => {
+                    errorMessage.remove();
+                }, 4000);
+                return false;
+            }
+            return true;
+        }
+
+        document.querySelector('form').addEventListener('submit', async function (event) {
+            event.preventDefault();
+            nameAlreadyExists.style.display = 'none';
+            userAlreadyExists.style.display = 'none';
+
+            const passwordsMatch = await checkPasswords();
+            if (passwordsMatch) {
+                createUser();
+            }
+        });
+
+    </script>
+</body>
